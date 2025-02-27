@@ -6,6 +6,8 @@ import FooterComp from "./Footer"
 import Login from "./login";
 import Register from "./register";
 import Home from "./home";
+import Bentley from "./Bentley";
+import Koenigsegg from "./Koenigsegg";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         {/* <Route path="/home" element={<Home />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/bentley" element={<Bentley />} />
+        <Route path="/koenigsegg" element={<Koenigsegg />} />
       </Routes>
       <FooterComp />
     </Router>
