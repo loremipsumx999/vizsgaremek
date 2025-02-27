@@ -65,6 +65,33 @@ app.post("/login", async (req, res) => {
     }
 });
 
+app.get("/user", async (req, res) => {
+    const { authorization } = req.headers;
+
+    if (!authorization) {
+        return res.status(401).json({ message: "Unauthorized: No token provided." });
+    }
+
+    const token = authorization.split(" ")[1];
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized: Invalid token format." });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const [users] = await db.query("SELECT id, username FROM users WHERE id = ?", [decoded.id]);
+
+        if (users.length === 0) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        res.json({ id: users[0].id, username: users[0].username });
+    } catch (err) {
+        console.error("Error in /user route:", err);
+        res.status(401).json({ message: "Unauthorized: Invalid token." });
+    }
+});
+
 app.put("/profile", async (req, res) => {
     const { token } = req.headers;
     if (!token) {
@@ -92,6 +119,29 @@ app.put("/profile", async (req, res) => {
       res.status(500).json({ message: "Error updating profile" });
     }
   });
+
+app.get("/getAllCars", async (req, res) =>{
+    try{
+        const [cars] = await db.query("SELECT * FROM cars");
+        res.json(cars);
+    }
+    catch(err){
+        console.error("Error fetching cars: ", err);
+        res.status(500).json({message: "Error fetching cars"});
+    }
+});
+
+//Bentley autók lekérése
+app.get("/Bentleys", async (req, res) => {
+    try {
+        const [bentleys] = await db.query("SELECT * FROM cars WHERE brand = 'Bentley'");
+        res.json(bentleys);
+    }
+    catch (err) {
+        console.error("Error fetching Bentleys: ", err);
+        res.status(500).json({ message: "Error fetching Bentley cars" });
+    }
+});
 
 app.post("/logout", (req, res) => {
     res.json({message: "Logged out successfully."});
