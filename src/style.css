@@ -1,3 +1,7 @@
+body{
+    margin-bottom: 70px;
+    overflow-x: hidden
+}
 .background {
     position: relative;
     width: 100vw;
@@ -6,8 +10,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    overflow: hidden;
-    position: fixed;
+
+
 }
 
 .background::before {
@@ -22,4 +26,10 @@
 .background > * {
     position: relative;
     z-index: 1;
+}
+
+.car-brands img {
+    width: 100px;
+    height: 100px;
+
 }

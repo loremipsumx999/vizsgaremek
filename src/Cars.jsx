@@ -2,41 +2,40 @@ import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from "react-bootstrap/Card";
 
-function Bentley(){
-    const [bentleys, setBentleys] = useState([]);
+function Cars(){
+    const [cars, setCars] = useState([]);
     const [error, setError] = useState("");
 
-    const fetchBentleys = async () =>{
+    const fetchCars = async () =>{
         try{
-            const response = await fetch("http://localhost:3000/Bentleys");
+            const response = await fetch("http://localhost:3000/getAllCars");
             const data = await response.json();
             if (response.ok){
-                setBentleys(data);
+                setCars(data);
             }
             else{
-                setError("Error fetching data");
+                setError("Error fetching cars");
             }
         }
         catch (err){
-            setError("Failed to fetch Bentleys.");
+            setError("Failed to fetch cars.");
         }
     };
 
     useEffect(() => {
-        fetchBentleys();
+        fetchCars();
     }, []);
 
     return(
         <div className="mt-5">
-            <h2 className="text-center">Bentley</h2>
             {error && <p className="text-danger text-center">{error}</p>}
             <div className="row mt-5">
-                {bentleys.length > 0 ? (
-                    bentleys.map((car) => (
+                {cars.length > 0 ? (
+                    cars.map((car) => (
                         <div key={car.id} className="col-md-4 mb-3">
                             <Card className="shadow">
                                 <Card.Body>
-                                {car.image_url && (
+                                    {car.image_url && (
                                     <Card.Img variant="top" src={car.image_url} alt={car.name} />
                                     )}
                                     <Card.Title className='mt-2'>{car.brand}</Card.Title>
@@ -50,10 +49,10 @@ function Bentley(){
                         </div>
                     ))
                 ) : !error ? (
-                    <p className="text-center">A pillanatban nincsenek Bentley autóink.</p>
+                    <p className="text-center">A pillanatban nincsenek autóink.</p>
                 ) : null}
             </div>
         </div>
     )
 }
-export default Bentley;
+export default Cars;
