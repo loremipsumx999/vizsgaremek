@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Register() {
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
@@ -15,12 +16,13 @@ function Register() {
             const response = await fetch('http://localhost:3000/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username, email, password }),
             });
             const data = await response.json();
             if (response.ok) {
                 alert('Sikeresen regisztráltál');
                 setUsername('');
+                setEmail('');
                 setPassword('');
             } else {
                 setError(data.message);
@@ -43,6 +45,16 @@ function Register() {
                             placeholder="Felhasználónév" 
                             value={username} 
                             onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Control 
+                            type="text" 
+                            placeholder="E-Mail" 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                         />
                     </Form.Group>

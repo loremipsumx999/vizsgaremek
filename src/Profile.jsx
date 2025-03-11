@@ -12,7 +12,7 @@ function Profile({ token }) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          token,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           username: newUsername,
@@ -33,22 +33,22 @@ function Profile({ token }) {
 
   return (
     <div>
-      <h2>Update Profile</h2>
+      <h2>Profil szerkesztése</h2>
       {error && <p>{error}</p>}
       <form onSubmit={handleUpdate}>
         <input
           type="text"
           value={newUsername}
           onChange={(e) => setNewUsername(e.target.value)}
-          placeholder="New Username"
+          placeholder="Új felhasználónév"
         />
         <input
           type="password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          placeholder="New Password"
+          placeholder="Új jelszó"
         />
-        <button type="submit">Update</button>
+        <button type="submit">Mentés</button>
       </form>
     </div>
   );

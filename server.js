@@ -21,7 +21,7 @@ const db = mysql.createPool({
 
 //Register
 app.post("/register", async (req, res) => {
-    const { username, password } = req.body;
+    const { username, email, password } = req.body;
     try{
         const [users] = await db.query("SELECT * FROM users WHERE username = ?", [username]);
         if(users.length > 0){
@@ -30,7 +30,7 @@ app.post("/register", async (req, res) => {
 
         const hashedPassword = await argon.hash(password);
 
-        await db.query("INSERT INTO users (username, password) VALUES (?, ?)", [username, hashedPassword]);
+        await db.query("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", [username, email, hashedPassword]);
         res.status(201).json({message: "User registered successfully."});
     } catch (err){
         console.error("Error during register: ", err);
@@ -118,7 +118,24 @@ app.put("/profile", async (req, res) => {
       console.error("Error updating profile:", err);
       res.status(500).json({ message: "Error updating profile" });
     }
-  });
+});
+
+app.post("/placeOrder", async (req, res) =>{
+    const {fullname, email, phonenumber, address, comment, carId} = req.body;
+    try{
+        const [existingOrders] = await db.query("SELECT * FROM orders where fullname = ?", [fullname]);
+        if(existingOrders.length > 0){
+            return res.status(400).json({message: "There is already an order with this name."});
+        }
+
+        await db.query("INSERT INTO orders (fullname, email, phonenumber, address, comment, carId) VALUES (?, ?, ?, ?, ?, ?)", [fullname, email, phonenumber, address, comment, carId]);
+        res.status(201).json({message: "Order has been processed"});
+    }
+    catch (err){
+        console.error("Error during order processing:", err);
+        res.status(500).json({message: "Error during order processing"});
+    }
+})
 
 app.get("/getAllCars", async (req, res) =>{
     try{
@@ -142,6 +159,17 @@ app.get("/Bentleys", async (req, res) => {
         res.status(500).json({ message: "Error fetching Bentley cars" });
     }
 });
+
+app.get("/Koenigseggs", async (req, res) => {
+    try{
+        const [koenigseggs] = await db.query("SELECT * FROM cars WHERE brand = 'Koenigsegg'");
+        res.json(koenigseggs);
+    }
+    catch (err) {
+        console.error("Error fetching Koenigseggs: ", err);
+        res.status(500).json({message: "Error fetching Koenigsegg cars"});
+    }
+})
 
 app.post("/logout", (req, res) => {
     res.json({message: "Logged out successfully."});

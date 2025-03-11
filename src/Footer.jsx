@@ -16,7 +16,7 @@ const styles = {
       color: "white",
       position: "fixed",
       textAlign: "center",
-      padding: "15px 0",
+      padding: "5px",
       width: "100%",
       bottom: "0",
       zIndex: 10,

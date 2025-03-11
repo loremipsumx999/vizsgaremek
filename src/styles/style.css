@@ -1,0 +1,25 @@
+body{
+    margin-bottom: 70px;
+    overflow-x: hidden;
+}
+
+.car-brands img {
+    width: 100px;
+    height: 100px;
+
+}
+
+.hero{
+    background-image: url(../img/lamborghini-50th-anniversary-wallpaper-preview.jpg);
+    background-size: cover;
+    color: #FFFFFF;
+}
+
+.rolunk{
+    padding: 25px;
+}
+
+.loanButton{
+    display: flex;
+
+}
