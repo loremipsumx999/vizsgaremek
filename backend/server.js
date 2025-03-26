@@ -363,8 +363,23 @@ app.post('/getFavoriteCars', async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: "Hiba a kedvenc autók lekérésekor" });
     }
-  });
+});
 
+const reviews = [
+    { id: 1, userName: "Kelemen Dávid", rating: 5, comment: "Remek ügyfélszolgálat és gyönyőrű autók!" },
+    { id: 2, userName: "Jagep20", rating: 3, comment: "Szerintem a Mitsubishi Carisma Sokkal kényelmesebb mint egy nagypapa Bentley, de kinek mi." },
+    { id: 3, userName: "Szabó Arnold", rating: 5, comment: "Gyors kiszállítás, jó ár/érték arány!" },
+    { id: 4, userName: "ValyiIstvan", rating: 5, comment: "A Bentley Continental GT Speed egy igazi élmény, minden kanyarban érezni a luxust;)" },
+    { id: 5, userName: "Race001 Gábor", rating: 5, comment: "A Bentley egyáltalán nem nagypapa autó. Kényelmes és elegáns." },
+    { id: 6, userName: "FeketePuma32", rating: 5, comment: "10/10, legjobb autók amiket lehet kínálni. Legközelebb legyen Miata:)" },
+    { id: 7, userName: "Komy28", rating: 2, comment: "Végre kijavítottátok az autómárkás kártyákat a főoldalon, már látom őket." },
+
+
+];
+
+app.get("/reviews", (req, res) => {
+    res.json(reviews);
+});
 
 app.post("/logout", (req, res) => {
     res.json({message: "Sikeresen kijelentkeztél."});
