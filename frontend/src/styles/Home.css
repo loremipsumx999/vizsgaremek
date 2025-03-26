@@ -1,3 +1,8 @@
+body{
+    margin-bottom: 70px;
+    overflow-x: hidden;
+}
+
 .background{
     position: relative;
     width: 100vw;
@@ -6,16 +11,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-body{
-    margin-bottom: 70px;
-    overflow-x: hidden;
-}
-
-.car-brands img {
-    width: 100px;
-    height: 100px;
+    
 }
 
 .background::before{
@@ -32,8 +28,34 @@ body{
     z-index: 1;
 }
 
+.car-brands{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    width: 120px;
+    border: solid 1px white;
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.car-brands:hover{
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.car-brands img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
 .carButtons{
-    margin-top: 15%;
+    margin-top: 10%;
+    gap: 10px;
+    
 }
 
 .carousel-container{
@@ -41,15 +63,10 @@ body{
     max-width: 1200px;
     margin: 50px auto;
     position: relative;
-    padding-top: 30vh;
+    padding-top: 35vh;
+    padding-bottom: 60px;
     
 }
-
-/* @media (max-width: 768px){
-    .carousel-container{
-        padding-top: 50vh;
-    }
-} */
 
 .carousel-image{
     width: 100%;
@@ -60,7 +77,8 @@ body{
 }
 
 .carousel-caption {
-    background-color: #00000091;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
     margin-bottom: 40px;
     border-radius: 10px;
 }
@@ -77,7 +95,17 @@ body{
   border-radius: 50%;
 }
 
-.car-brands{
-    border: solid 1px white;
-    margin: 10px;
+@media (max-width: 768px) {
+    .carButtons {
+        gap: 10px;
+        padding: 15px;
+    }
+    .car-brands {
+        width: 90px;
+        height: 90px;
+    }
+    .car-brands img {
+        width: 70px;
+        height: 70px;
+    }
 }
