@@ -1,0 +1,22 @@
+.small-image {
+    max-width: 400px;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .small-image {
+        max-width: 200px;
+    }
+}
+
+.welcome{
+    font-size: 20px;
+}
+
+.initial{
+    font-size: 4em;
+    font-weight: bold;
+    color: #967300;
+    float: left;
+    margin-right: 10px;
+}
