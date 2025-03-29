@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, {StrictMode} from "react";
 import {createRoot} from "react-dom/client";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,17 +9,4 @@ root.render(
     <StrictMode>
         <App />
     </StrictMode>
-=======
-import React, {StrictMode} from "react";
-import {createRoot} from "react-dom/client";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import App from "./App.jsx";
-
-const root = createRoot(document.getElementById("root"));
-root.render(
-    <StrictMode>
-        <App />
-    </StrictMode>
->>>>>>> 506c4f3 (szakdoga)
 );
