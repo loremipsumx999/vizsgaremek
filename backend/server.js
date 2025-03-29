@@ -767,8 +767,7 @@ const reviews = [
     { id: 4, userName: "ValyiIstvan", rating: 5, comment: "A Bentley Continental GT Speed egy igazi élmény, minden kanyarban érezni a luxust;)" },
     { id: 5, userName: "Race001 Gábor", rating: 5, comment: "A Bentley egyáltalán nem nagypapa autó. Kényelmes és elegáns." },
     { id: 6, userName: "FeketePuma32", rating: 5, comment: "10/10, legjobb autók amiket lehet kínálni. Legközelebb legyen Miata:)" },
-    { id: 7, userName: "Komy28", rating: 2, comment: "Végre kijavítottátok az autómárkás kártyákat a főoldalon, már látom őket." },
-
+    { id: 7, userName: "Komy28", rating: 3, comment: "Végre kijavítottátok az autómárkás kártyákat a főoldalon, már látom őket." },
 
 ];
 
