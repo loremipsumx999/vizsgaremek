@@ -21,8 +21,9 @@ function Cars({ onFavoriteChange }) {
             const data = await response.json();
             if (response.ok) {
                 setCars(data);
-                
-                const savedFavorites = JSON.parse(localStorage.getItem('carFavorites') || {});
+                setError("");
+
+                const savedFavorites = JSON.parse(localStorage.getItem('carFavorites') || "{}");
                 
                 const initialFavorites = data.reduce((acc, car) => {
                     acc[car.id] = savedFavorites[car.id] || false;
@@ -79,6 +80,7 @@ function Cars({ onFavoriteChange }) {
 
     return (
         <div>
+            <title>Race-001 | Autóink</title>
             {error && <p className="text-danger text-center">{error}</p>}
             <h2 style={{ textAlign: 'center' }} className='mb-5 mt-2'>Fedezd fel a legújabb luxus modelleket!</h2>
 
@@ -95,8 +97,8 @@ function Cars({ onFavoriteChange }) {
                                     {car.image_url && (
                                         <Card.Img variant="top" src={car.image_url} alt={car.name} />
                                     )}
-                                    <Card.Title className='mt-2'>{car.brand}</Card.Title><hr />
-                                    <Card.Text className='mt-3'>
+                                    <Card.Title className='mt-4'>{car.brand}</Card.Title><hr />
+                                    <div className='mt-3 card-text'>
                                         {car.name}<br />
                                         {car.year}<br />
                                         {car.engine}<br />
@@ -115,7 +117,7 @@ function Cars({ onFavoriteChange }) {
                                                 Kölcsönzés
                                             </Button>
                                         </div>
-                                    </Card.Text>
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </div>

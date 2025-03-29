@@ -30,13 +30,17 @@ function NavbarComp({ user, onLogout, favoritesUpdated }) {
   };
 
   const fetchOrders = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
+    const token = localStorage.getItem('token');
+    if (!token){
+      setError("Kölcsönzéshez be kell jelentkezz!");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:3000/getOrder", {
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
       });
 

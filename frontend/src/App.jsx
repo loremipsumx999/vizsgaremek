@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import "./styles/Index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
 import NavbarComp from "./pages/components/Navbar.jsx";

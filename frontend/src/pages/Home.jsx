@@ -16,7 +16,6 @@ const Home = () => {
     fetch("http://localhost:3000/reviews")
     .then((response) => response.json())
     .then((data) => {
-      
       setReviews(data);
     })
     .catch((error) => {
@@ -26,6 +25,7 @@ const Home = () => {
 
   return (
     <div className="background">
+      <style>{'body { background-color: #212121; }'}</style>
       <div className="row">
         <div className="col-12 col-md-6 mx-auto mt-5 text-center" style={{ color: "white" }}>
           <h1 className="mb-3">LUXUS | ELEGANCIA | ÉLETÉRZÉS</h1>

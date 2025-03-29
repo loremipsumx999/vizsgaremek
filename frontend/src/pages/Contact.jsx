@@ -32,8 +32,8 @@ export default function Contact(){
 }
 
     return(
-        
         <div className="text-center">
+            <title>Race-001 | Kapcsolat</title>
             <h1>Kapcsolat</h1><hr />
             <h3>Vedd fel velünk a kapcsolatot!</h3>
             <p className="mb-5">Ha bármilyen kérdése van, vagy segítségre lenne szüksége, ügyfélszolgálatunk a nap 24 órájában a elérhető.</p>
@@ -62,11 +62,11 @@ export default function Contact(){
                         <p className="mb-0 ms-2">race001kolcsonzo@gmail.com</p>
                     </div>
                     <div className="d-flex align-items-center mb-3">
-                        <i class="material-icons">&#xe0c8;</i>
+                        <i className="material-icons">&#xe0c8;</i>
                         <p className="mb-0 ms-2">Székesfehérvár Gáz utca 1/D</p>
                     </div>
                     <div className="d-flex align-items-center mb-3">
-                        <i class="material-icons">&#xe0b0;</i>
+                        <i className="material-icons">&#xe0b0;</i>
                         <p className="mb-0 ms-2">+36702305803</p>
                     </div>
                     <hr />

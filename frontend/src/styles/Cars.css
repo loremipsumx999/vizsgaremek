@@ -1,15 +1,14 @@
 .masonry-grid {
     display: flex;
-    margin-left: -30px; /* Adjust this value to control the gutter size */
+    margin-left: -30px;
     width: auto;
 }
 
 .masonry-grid_column {
-    padding-left: 30px; /* Adjust this value to control the gutter size */
+    padding-left: 30px;
     background-clip: padding-box;
 }
 
-/* Optional: Style the items */
 .masonry-grid_column > div {
-    margin-bottom: 30px; /* Adjust this value to control the space between items */
+    margin-bottom: 30px;
 }
