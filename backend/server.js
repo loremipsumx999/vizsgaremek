@@ -30,20 +30,27 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-//Register
+const checkAdmin = (decodedToken) => {
+    return decodedToken.isAdmin === true;
+};
+
 app.post("/register", async (req, res) => {
     const { username, lastname, firstname, email, password } = req.body;
 
-    try{
+    try {
         const [users] = await db.query("SELECT * FROM users WHERE username = ?", [username]);
-        if(users.length > 0){
-             return res.status(400).json({message: "Már létezik ilyen felhasználónév."});
+        if (users.length > 0) {
+            return res.status(400).json({ message: "Már létezik ilyen felhasználónév." });
         }
 
         const hashedPassword = await argon.hash(password);
-
-        await db.query("INSERT INTO users (username, lastname, firstname, email, password) VALUES (?, ?, ?, ?, ?)", [username, lastname, firstname, email, hashedPassword]);
         
+        // Alapértelmezés szerint nem admin (isAdmin = 0)
+        await db.query(
+            "INSERT INTO users (username, lastname, firstname, email, password, isAdmin) VALUES (?, ?, ?, ?, ?, 0)",
+            [username, lastname, firstname, email, hashedPassword]
+        );
+    
         const mailOptions = {
             from: "kucsikgabor22@gmail.com",
             to: email,
@@ -52,47 +59,53 @@ app.post("/register", async (req, res) => {
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
-            if (error){
+            if (error) {
                 console.error("Hiba az e-mail küldése közben!");
-            }
-            else{
+            } else {
                 console.log(`Az e-mail sikeresen elküldve a ${email} címre.`)
             }
         });
         
-        res.status(201).json({message: "Sikeres regisztrálás!"});
-    } catch (err){
+        res.status(201).json({ message: "Sikeres regisztrálás!" });
+    } catch (err) {
         console.error("Hiba regisztráció közben: ", err);
-        res.status(500).json({message: "Hiba a regisztráció közben."});
+        res.status(500).json({ message: "Hiba a regisztráció közben." });
     }
 });
 
-//LogIn
+
+// Login
 app.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
-    try{
-        //Keresés
+    try {
         const [users] = await db.query("SELECT * FROM users WHERE username = ?", [username]);
-        if(users.length === 0){
-            return res.status(400).json({message: "Nincs ilyen felhasználó."});
+        if (users.length === 0) {
+            return res.status(400).json({ message: "Nincs ilyen felhasználó." });
         }
         const user = users[0];
 
-        //Jelszó ellenőrzése
         const isMatch = await argon.verify(user.password, password);
-        if (!isMatch){
-            return res.status(400).json({message: "."});
+        if (!isMatch) {
+            return res.status(400).json({ message: "Hibás jelszó." });
         }
 
-        //JWT token
-        const token = jwt.sign({id: user.id, username: user.username}, process.env.JWT_SECRET, {expiresIn: "1h"});
-        res.json({token});
-    } catch (err){
+        const token = jwt.sign(
+            {
+                id: user.id,
+                username: user.username,
+                isAdmin: user.isAdmin === 1 // Itt az adatbázisból olvassuk az admin státuszt
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+        res.json({ token, isAdmin: user.isAdmin === 1 });
+    } catch (err) {
         console.error("Hiba a bejelentkezésnél (backend)", err);
-        res.status(500).json({message: "Hiba a bejelentkezésnél."});
+        res.status(500).json({ message: "Hiba a bejelentkezésnél." });
     }
 });
+
 
 app.get("/user", async (req, res) => {
     const { authorization } = req.headers;
@@ -108,16 +121,247 @@ app.get("/user", async (req, res) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const [users] = await db.query("SELECT id, username, firstname, lastname, email FROM users WHERE id = ?", [decoded.id]);
+        const [users] = await db.query("SELECT id, username, firstname, lastname, email, isAdmin FROM users WHERE id = ?", [decoded.id]);
 
         if (users.length === 0) {
             return res.status(404).json({ message: "Nem található felhasználó." });
         }
 
-        res.json({ id: users[0].id, username: users[0].username, firstname: users[0].firstname, lastname: users[0].lastname, email: users[0].email });
+        res.json({ 
+            id: users[0].id, 
+            username: users[0].username, 
+            firstname: users[0].firstname, 
+            lastname: users[0].lastname, 
+            email: users[0].email,
+            isAdmin: users[0].isAdmin === 1 // Itt is az adatbázisból olvassuk
+        });
     } catch (err) {
         console.error("Hiba a backendben:", err);
         res.status(401).json({ message: "Sikertelen hitelesítés: Hibás token." });
+    }
+});
+
+app.get("/allUsers", async (req, res) => {
+    const { authorization } = req.headers;
+
+    if (!authorization) {
+        return res.status(401).json({ message: "Hitelesítés szükséges" });
+    }
+
+    try {
+        const token = authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        if (!checkAdmin(decoded)) {
+            return res.status(403).json({ message: "Nincs admin jogosultság" });
+        }
+
+        const [users] = await db.query("SELECT id, username, firstname, lastname, email, isAdmin FROM users");
+        res.json(users);
+    } catch (err) {
+        console.error("Hiba a felhasználók lekérésekor:", err);
+        res.status(500).json({ message: "Hiba a felhasználók lekérésekor" });
+    }
+});
+
+app.get("/allOrders", async (req, res) => {
+    const { authorization } = req.headers;
+
+    if (!authorization) {
+        return res.status(401).json({ message: "Hitelesítés szükséges" });
+    }
+
+    try {
+        const token = authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        if (!checkAdmin(decoded)) {
+            return res.status(403).json({ message: "Nincs admin jogosultság" });
+        }
+
+        const [orders] = await db.query("SELECT * FROM orders");
+        res.json(orders);
+    } catch (err) {
+        console.error("Hiba a rendelések lekérésekor:", err);
+        res.status(500).json({ message: "Hiba a rendelések lekérésekor" });
+    }
+});
+
+app.delete("/deleteUser/:id", async (req, res) => {
+    const { authorization } = req.headers;
+    const userId = req.params.id;
+
+    if (!authorization) {
+        return res.status(401).json({ message: "Hitelesítés szükséges" });
+    }
+
+    try {
+        const token = authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        if (!checkAdmin(decoded)) {
+            return res.status(403).json({ message: "Nincs admin jogosultság" });
+        }
+
+        await db.query("DELETE FROM users WHERE id = ?", [userId]);
+        res.json({ message: "Felhasználó sikeresen törölve" });
+    } catch (err) {
+        console.error("Hiba a felhasználó törlésekor:", err);
+        res.status(500).json({ message: "Hiba a felhasználó törlésekor" });
+    }
+});
+
+// Autó törlése (csak admin)
+app.delete("/deleteCar/:id", async (req, res) => {
+    const { authorization } = req.headers;
+    const carId = req.params.id;
+
+    if (!authorization) {
+        return res.status(401).json({ message: "Hitelesítés szükséges" });
+    }
+
+    try {
+        const token = authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        if (!checkAdmin(decoded)) {
+            return res.status(403).json({ message: "Nincs admin jogosultság" });
+        }
+
+        await db.query("DELETE FROM cars WHERE id = ?", [carId]);
+        res.json({ message: "Autó sikeresen törölve" });
+    } catch (err) {
+        console.error("Hiba az autó törlésekor:", err);
+        res.status(500).json({ message: "Hiba az autó törlésekor" });
+    }
+});
+
+app.delete("/deleteOrder/:id", async (req, res) => {
+    const { authorization } = req.headers;
+    const orderId = req.params.id;
+
+    if (!authorization) {
+        return res.status(401).json({ message: "Hitelesítés szükséges" });
+    }
+
+    try {
+        const token = authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        if (!checkAdmin(decoded)) {
+            return res.status(403).json({ message: "Nincs admin jogosultság" });
+        }
+
+        await db.query("DELETE FROM orders WHERE id = ?", [orderId]);
+        res.json({ message: "Rendelés sikeresen törölve" });
+    } catch (err) {
+        console.error("Hiba a rendelés törlésekor:", err);
+        res.status(500).json({ message: "Hiba a rendelés törlésekor" });
+    }
+});
+
+// Admin státusz frissítése
+app.put("/updateAdminStatus/:id", async (req, res) => {
+    const { authorization } = req.headers;
+    const userId = req.params.id;
+    const { isAdmin } = req.body;
+
+    if (!authorization) {
+        return res.status(401).json({ message: "Hitelesítés szükséges" });
+    }
+
+    try {
+        const token = authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        if (!checkAdmin(decoded)) {
+            return res.status(403).json({ message: "Nincs admin jogosultság" });
+        }
+
+        // Convert boolean to tinyint (1 or 0) for MySQL
+        const adminValue = isAdmin ? 1 : 0;
+        
+        await db.query("UPDATE users SET isAdmin = ? WHERE id = ?", [adminValue, userId]);
+        
+        // Also update the JWT if the user is modifying their own status
+        if (decoded.id === parseInt(userId)) {
+            const newToken = jwt.sign(
+                {
+                    id: decoded.id, 
+                    username: decoded.username,
+                    isAdmin: isAdmin
+                }, 
+                process.env.JWT_SECRET, 
+                {expiresIn: "1h"}
+            );
+            return res.json({ message: "Admin státusz sikeresen frissítve", token: newToken });
+        }
+        
+        res.json({ message: "Admin státusz sikeresen frissítve" });
+    } catch (err) {
+        console.error("Hiba az admin státusz frissítésekor:", err);
+        res.status(500).json({ message: "Hiba az admin státusz frissítésekor" });
+    }
+});
+
+app.put("/updateCar/:id", async (req, res) => {
+    const { authorization } = req.headers;
+    const carId = req.params.id;
+    const { brand, name, year, engine, price, image_url } = req.body;
+
+    if (!authorization) {
+        return res.status(401).json({ message: "Hitelesítés szükséges" });
+    }
+
+    try {
+        const token = authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        if (!checkAdmin(decoded)) {
+            return res.status(403).json({ message: "Nincs admin jogosultság" });
+        }
+
+        await db.query(
+            "UPDATE cars SET brand = ?, name = ?, year = ?, engine = ?, price = ?, image_url = ? WHERE id = ?",
+            [brand, name, year, engine, price, image_url, carId]
+        );
+        
+        res.json({ message: "Autó sikeresen frissítve" });
+    } catch (err) {
+        console.error("Hiba az autó frissítésekor:", err);
+        res.status(500).json({ message: "Hiba az autó frissítésekor" });
+    }
+});
+
+// Új autó hozzáadása (csak admin)
+app.post("/addCar", async (req, res) => {
+    const { authorization } = req.headers;
+    const { brand, name, year, engine, price, image_url } = req.body;
+
+    if (!authorization) {
+        return res.status(401).json({ message: "Hitelesítés szükséges" });
+    }
+
+    try {
+        const token = authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        if (!checkAdmin(decoded)) {
+            return res.status(403).json({ message: "Nincs admin jogosultság" });
+        }
+
+        const [result] = await db.query(
+            "INSERT INTO cars (brand, name, year, engine, price, image_url) VALUES (?, ?, ?, ?, ?, ?)",
+            [brand, name, year, engine, price, image_url]
+        );
+        
+        res.status(201).json({ 
+            message: "Autó sikeresen hozzáadva",
+            id: result.insertId
+        });
+    } catch (err) {
+        console.error("Hiba az autó hozzáadásakor:", err);
+        res.status(500).json({ message: "Hiba az autó hozzáadásakor" });
     }
 });
 
@@ -226,17 +470,6 @@ app.get("/Porsche", async (req, res) =>{
     catch (err){
         console.error("Hiba a Porsche-k lekérésekor: ", err);
         res.status(500).json({message: "Hiba a Porsche-k lekérésekor."});
-    }
-});
-
-app.get("/Lamborghini", async (req, res) =>{
-    try{
-        const [lamborghini] = await db.query("SELECT * FROM cars WHERE brand = 'Lamborghini'");
-        res.json(lamborghini);
-    }
-    catch(err){
-        console.error("Hiba a Lamborghini-k lekérésekor: ", err);
-        res.status(500).json({message: "Hiba a Lamborghini-k lekérésekor."});
     }
 });
 
@@ -366,6 +599,8 @@ app.post('/getFavoriteCars', async (req, res) => {
       res.status(500).json({ error: "Hiba a kedvenc autók lekérésekor" });
     }
 });
+
+// ADMIN
 
 const reviews = [
     { id: 1, userName: "Kelemen Dávid", rating: 5, comment: "Remek ügyfélszolgálat és gyönyőrű autók!" },

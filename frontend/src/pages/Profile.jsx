@@ -79,7 +79,6 @@ const Profile = () => {
 
     return (
       <div>
-        <title>Race-001 | Profil</title>
         <Container className="mt-5">
           <Row>
             <Col xs={12} md={6}>

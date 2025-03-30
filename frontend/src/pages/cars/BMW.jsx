@@ -71,7 +71,7 @@ function BMW() {
                                     {car.image_url && (
                                         <Card.Img variant="top" src={car.image_url} alt={car.name} />
                                     )}
-                                    <Card.Title className='mt-4'>{car.brand}</Card.Title><hr />
+                                    <Card.Title className='mt-2'>{car.brand}</Card.Title>
                                     <Card.Text className='mt-3'>
                                         {car.name}<br />
                                         {car.year}<br />
@@ -102,4 +102,5 @@ function BMW() {
         </div>
     );
 }
+
 export default BMW;

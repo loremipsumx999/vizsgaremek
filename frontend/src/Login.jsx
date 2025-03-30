@@ -35,7 +35,6 @@ function Login({ onLogin }) {
 
     return (
         <div className="d-flex justify-content-center align-items-center" style={{ height: '70vh' }}>
-        <title>Race-001 | Bejelentkezés</title>
             <Card style={{ width: '18rem' }}>
                 <Card.Body>
                     <h2 className="text-center mb-4">Bejelentkezés</h2>

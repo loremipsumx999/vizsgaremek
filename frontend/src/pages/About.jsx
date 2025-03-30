@@ -8,7 +8,6 @@ import Image2 from '../img/other/IMG_4815.JPEG';
 function AboutUs(){
     return(
         <div>
-        <title>Race-001 | Rólunk</title>
             <Container className='text-center mt-4'>
                 <h1 >Race-001 Autókölcsönző - Rólunk</h1>
                 <p>Ismerd meg jobban a csapatunkat</p>

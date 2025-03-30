@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "./styles/Index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/Index.css";
 import { Helmet } from "react-helmet";
 import NavbarComp from "./pages/components/Navbar.jsx";
 import FooterComp from "./pages/components/Footer.jsx";
@@ -15,6 +15,7 @@ import Profil from "./pages/Profile.jsx";
 import Rent from "./pages/Rent.jsx";
 import PostRent from "./pages/PostRent.jsx";
 import Contact from "./pages/Contact.jsx";
+import AdminPanel from "./pages/AdminPanel.jsx";
 
 import Bentley from "./pages/cars/Bentley";
 import Koenigsegg from "./pages/cars/Koenigsegg";
@@ -88,6 +89,7 @@ function App() {
                 <Route path="/About" element={<AboutUs />} />
                 <Route path="/Profile" element={<Profil token={token} />} />
                 <Route path="/Rent" element={<Rent />} />
+                <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/PostRent" element={<PostRent />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/register" element={<Register />} />
