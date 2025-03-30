@@ -32,11 +32,14 @@ CREATE TABLE orders(
     FOREIGN KEY (carId) REFERENCES cars(id)
 );
 
+<<<<<<< HEAD
 ALTER TABLE users ADD isAdmin TINYINT(1) DEFAULT 0;
 ALTER TABLE users MODIFY COLUMN isAdmin TINYINT(1) DEFAULT 0;
 
 INSERT INTO users (id, username, lastname, firstname, email, password, isAdmin) VALUES (1, "admin", "", "", "race001@gmail.com", "$argon2id$v=19$m=65536,t=3,p=4$xr91yUVNaer+avy1lovv8Q$GVgRbp4fZIXWTUEjODclFbcC6TQQU/BVyo4XgfVikg8", 1);
 
+=======
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
 INSERT INTO cars(brand, name, year, engine, price, image_url) VALUES 
 ("Bentley", "Flying Spur Mulliner", 2024, "6.0L, W12, benzinmotor", "300.000 Ft", "https://www.bentleyofgreenwich.com/imagetag/7165/main/l/New-2024-Bentley-Flying-Spur-Mulliner-W12.jpg"),
 ("Bentley", "Bentayga", 2020, "4.0L, V8, benzinmotor", "180.000 Ft", "https://d3jvxfsgjxj1vz.cloudfront.net/news/wp-content/uploads/2020/07/01101658/Image-1-The-New-Bentayga-Front.jpg"),

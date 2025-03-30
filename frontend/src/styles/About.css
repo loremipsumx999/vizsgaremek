@@ -1,12 +1,22 @@
+<<<<<<< HEAD
 /* About.css */
 .small-image {
     max-width: 400px; /* Full width by default */
     height: auto; /* Maintain aspect ratio */
+=======
+.small-image {
+    max-width: 400px;
+    height: auto;
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
 }
 
 @media (max-width: 768px) {
     .small-image {
+<<<<<<< HEAD
         max-width: 200px; /* Smaller size for smaller screens */
+=======
+        max-width: 200px;
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
     }
 }
 

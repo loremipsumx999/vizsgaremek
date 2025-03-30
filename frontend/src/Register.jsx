@@ -40,6 +40,10 @@ function Register() {
 
     return (
         <div className="d-flex justify-content-center align-items-center" style={{ height: '70vh' }}>
+<<<<<<< HEAD
+=======
+        <title>Race-001 | Regisztráció</title>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
         <Card style={{ width: '18rem' }}>
             <Card.Body>
                 <h2 className="text-center mb-4">Regisztráció</h2>

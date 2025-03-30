@@ -32,8 +32,13 @@ export default function Contact(){
 }
 
     return(
+<<<<<<< HEAD
         
         <div className="text-center">
+=======
+        <div className="text-center">
+            <title>Race-001 | Kapcsolat</title>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
             <h1>Kapcsolat</h1><hr />
             <h3>Vedd fel velünk a kapcsolatot!</h3>
             <p className="mb-5">Ha bármilyen kérdése van, vagy segítségre lenne szüksége, ügyfélszolgálatunk a nap 24 órájában a elérhető.</p>

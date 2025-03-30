@@ -37,52 +37,92 @@ const Home = () => {
         <Container className='text-center carButtons'>
           <Row>
             <Col xs={4} sm={3} md={2}>
+<<<<<<< HEAD
               <Button variant="link" className="car-brands" onClick={() => navigate('/Mercedes')}>
+=======
+              <Button variant="link" className="car-brands" onClick={() => navigate('/mercedes')}>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 <Image src={require('../img/brandlogos/mercedes.png')} fluid />
               </Button>
             </Col>
             <Col xs={4} sm={3} md={2}>
+<<<<<<< HEAD
               <Button variant="link" className="car-brands" onClick={() => navigate('/Porsche')}>
+=======
+              <Button variant="link" className="car-brands" onClick={() => navigate('/porsche')}>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 <Image src={require('../img/brandlogos/porsche.png')} fluid />
               </Button>
             </Col>
             <Col xs={4} sm={3} md={2}>
+<<<<<<< HEAD
               <Button variant="link" className="car-brands" onClick={() => navigate('/Koenigsegg')}>
+=======
+              <Button variant="link" className="car-brands" onClick={() => navigate('/koenigsegg')}>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 <Image src={require('../img/brandlogos/koenigsegg.png')} fluid />
               </Button>
             </Col>
             <Col xs={4} sm={3} md={2}>
+<<<<<<< HEAD
               <Button variant="link" className="car-brands" onClick={() => navigate('/Bentley')}>
+=======
+              <Button variant="link" className="car-brands" onClick={() => navigate('/bentley')}>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 <Image src={require('../img/brandlogos/bentley.png')} fluid />
               </Button>
             </Col>
             <Col xs={4} sm={3} md={2}>
+<<<<<<< HEAD
               <Button variant="link" className="car-brands" onClick={() => navigate('/Lamborghini')}>
+=======
+              <Button variant="link" className="car-brands" onClick={() => navigate('/lamborghini')}>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 <Image src={require('../img/brandlogos/lamborghini.png')} fluid />
               </Button>
             </Col>
             <Col xs={4} sm={3} md={2}>
+<<<<<<< HEAD
               <Button variant="link" className="car-brands" onClick={() => navigate('/BMW')}>
+=======
+              <Button variant="link" className="car-brands" onClick={() => navigate('/bmw')}>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 <Image src={require('../img/brandlogos/bmw.png')} fluid />
               </Button>
             </Col>
             <Col xs={4} sm={3} md={2}>
+<<<<<<< HEAD
               <Button variant="link" className="car-brands" onClick={() => navigate('/Pagani')}>
+=======
+              <Button variant="link" className="car-brands" onClick={() => navigate('/pagani')}>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 <Image src={require('../img/brandlogos/pagani.png')} fluid />
               </Button>
             </Col>
             <Col xs={4} sm={3} md={2}>
+<<<<<<< HEAD
               <Button variant="link" className="car-brands" onClick={() => navigate('/RollsRoyce')}>
+=======
+              <Button variant="link" className="car-brands" onClick={() => navigate('/rollsroyce')}>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 <Image src={require('../img/brandlogos/rollsroyce.png')} fluid />
               </Button>
             </Col>
             <Col xs={4} sm={3} md={2}>
+<<<<<<< HEAD
               <Button variant="link" className="car-brands" onClick={() => navigate('/Ferrari')}>
+=======
+              <Button variant="link" className="car-brands" onClick={() => navigate('/ferrari')}>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 <Image src={require('../img/brandlogos/ferrari.png')} fluid />
               </Button>
             </Col>
             <Col xs={4} sm={3} md={2}>
+<<<<<<< HEAD
               <Button variant="link" className="car-brands" onClick={() => navigate('/AstonMartin')}>
+=======
+              <Button variant="link" className="car-brands" onClick={() => navigate('/astonmartin')}>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 <Image src={require('../img/brandlogos/astonmartin.png')} fluid />
               </Button>
             </Col>

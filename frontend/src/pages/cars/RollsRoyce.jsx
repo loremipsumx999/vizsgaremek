@@ -71,7 +71,11 @@ function RollsRoyce() {
                                     {car.image_url && (
                                         <Card.Img variant="top" src={car.image_url} alt={car.name} />
                                     )}
+<<<<<<< HEAD
                                     <Card.Title className='mt-2'>{car.brand}</Card.Title>
+=======
+                                    <Card.Title className='mt-4'>{car.brand}</Card.Title><hr />
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                                     <Card.Text className='mt-3'>
                                         {car.name}<br />
                                         {car.year}<br />

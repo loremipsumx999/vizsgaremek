@@ -109,7 +109,11 @@ export default function Rent() {
                                 {car.image_url && (
                                     <Card.Img variant="top" src={car.image_url} alt={car.name} />
                                 )}
+<<<<<<< HEAD
                                 <Card.Title className='mt-2'>{car.brand} {car.name}</Card.Title>
+=======
+                                <Card.Title className='mt-2'>{car.brand} {car.name}</Card.Title><hr />
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                                 <Card.Text>
                                     Évjárat: {car.year}<br />
                                     Motor: {car.engine}<br />
@@ -161,7 +165,11 @@ export default function Rent() {
                                     </Form.Group>
 
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+<<<<<<< HEAD
                                         <Form.Label className="text-start" style={{ width: '100%' }}>Megjegyzés</Form.Label>
+=======
+                                        <Form.Label className="text-start" style={{ width: '100%' }}>Megjegyzés*</Form.Label>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                                         <Form.Control 
                                             as="textarea" 
                                             rows={3} 

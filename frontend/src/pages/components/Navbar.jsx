@@ -102,9 +102,12 @@ function NavbarComp({ user, onLogout, favoritesUpdated }) {
             <Nav.Link as={Link} to="/Cars">Autóink</Nav.Link>
             <Nav.Link as={Link} to="/Contact">Kapcsolat</Nav.Link>
             <Nav.Link as={Link} to="/About">Rólunk</Nav.Link>
+<<<<<<< HEAD
             {user?.isAdmin && (
               <Nav.Link as={Link} to="/admin">Admin Panel</Nav.Link>
             )}
+=======
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
           </Nav>
 
           <Nav className="ms-auto">

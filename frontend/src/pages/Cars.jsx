@@ -80,6 +80,10 @@ function Cars({ onFavoriteChange }) {
 
     return (
         <div>
+<<<<<<< HEAD
+=======
+            <title>Race-001 | Autóink</title>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
             {error && <p className="text-danger text-center">{error}</p>}
             <h2 style={{ textAlign: 'center' }} className='mb-5 mt-2'>Fedezd fel a legújabb luxus modelleket!</h2>
 
@@ -96,7 +100,11 @@ function Cars({ onFavoriteChange }) {
                                     {car.image_url && (
                                         <Card.Img variant="top" src={car.image_url} alt={car.name} />
                                     )}
+<<<<<<< HEAD
                                     <Card.Title className='mt-2'>{car.brand}</Card.Title><hr />
+=======
+                                    <Card.Title className='mt-4'>{car.brand}</Card.Title><hr />
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                                     <div className='mt-3 card-text'>
                                         {car.name}<br />
                                         {car.year}<br />

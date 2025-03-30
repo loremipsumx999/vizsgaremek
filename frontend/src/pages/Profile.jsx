@@ -79,6 +79,10 @@ const Profile = () => {
 
     return (
       <div>
+<<<<<<< HEAD
+=======
+        <title>Race-001 | Profil</title>
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
         <Container className="mt-5">
           <Row>
             <Col xs={12} md={6}>

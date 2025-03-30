@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+<<<<<<< HEAD
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/Index.css";
+=======
+import { useNavigate } from "react-router-dom";
+import "./styles/Index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
 import { Helmet } from "react-helmet";
 import NavbarComp from "./pages/components/Navbar.jsx";
 import FooterComp from "./pages/components/Footer.jsx";
@@ -14,7 +20,10 @@ import Profil from "./pages/Profile.jsx";
 import Rent from "./pages/Rent.jsx";
 import PostRent from "./pages/PostRent.jsx";
 import Contact from "./pages/Contact.jsx";
+<<<<<<< HEAD
 import AdminPanel from "./pages/AdminPanel.jsx";
+=======
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
 
 import Bentley from "./pages/cars/Bentley";
 import Koenigsegg from "./pages/cars/Koenigsegg";
@@ -88,6 +97,7 @@ function App() {
                 <Route path="/About" element={<AboutUs />} />
                 <Route path="/Profile" element={<Profil token={token} />} />
                 <Route path="/Rent" element={<Rent />} />
+<<<<<<< HEAD
                 <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/PostRent" element={<PostRent />} />
                 <Route path="/Login" element={<Login onLogin={handleLogin} />} />
@@ -102,6 +112,21 @@ function App() {
                 <Route path="/Rollsroyce" element={<RollsRoyce />} />
                 <Route path="/Astonmartin" element={<AstonMartin />} />
                 <Route path="/Ferrari" element={<Ferrari />} />
+=======
+                <Route path="/PostRent" element={<PostRent />} />
+                <Route path="/login" element={<Login onLogin={handleLogin} />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/bentley" element={<Bentley />} />
+                <Route path="/koenigsegg" element={<Koenigsegg />} />
+                <Route path="/mercedes" element={<Mercedes />} />
+                <Route path="/porsche" element={<Porsche />} />
+                <Route path="/lamborghini" element={<Lamborghini />} />
+                <Route path="/pagani" element={<Pagani />} />
+                <Route path="/bmw" element={<BMW />} />
+                <Route path="/rollsroyce" element={<RollsRoyce />} />
+                <Route path="/astonmartin" element={<AstonMartin />} />
+                <Route path="/ferrari" element={<Ferrari />} />
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
             </Routes>
             <FooterComp />
         </Router>

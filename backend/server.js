@@ -30,6 +30,7 @@ const transporter = nodemailer.createTransport({
     }
 })
 
+<<<<<<< HEAD
 const checkAdmin = (decodedToken) => {
     return decodedToken.isAdmin === true;
 };
@@ -51,6 +52,22 @@ app.post("/register", async (req, res) => {
             [username, lastname, firstname, email, hashedPassword]
         );
     
+=======
+//Register
+app.post("/register", async (req, res) => {
+    const { username, lastname, firstname, email, password } = req.body;
+
+    try{
+        const [users] = await db.query("SELECT * FROM users WHERE username = ?", [username]);
+        if(users.length > 0){
+             return res.status(400).json({message: "Már létezik ilyen felhasználónév."});
+        }
+
+        const hashedPassword = await argon.hash(password);
+
+        await db.query("INSERT INTO users (username, lastname, firstname, email, password) VALUES (?, ?, ?, ?, ?)", [username, lastname, firstname, email, hashedPassword]);
+        
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
         const mailOptions = {
             from: "kucsikgabor22@gmail.com",
             to: email,
@@ -59,13 +76,21 @@ app.post("/register", async (req, res) => {
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
+<<<<<<< HEAD
             if (error) {
                 console.error("Hiba az e-mail küldése közben!");
             } else {
+=======
+            if (error){
+                console.error("Hiba az e-mail küldése közben!");
+            }
+            else{
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
                 console.log(`Az e-mail sikeresen elküldve a ${email} címre.`)
             }
         });
         
+<<<<<<< HEAD
         res.status(201).json({ message: "Sikeres regisztrálás!" });
     } catch (err) {
         console.error("Hiba regisztráció közben: ", err);
@@ -107,6 +132,42 @@ app.post("/login", async (req, res) => {
 });
 
 
+=======
+        res.status(201).json({message: "Sikeres regisztrálás!"});
+    } catch (err){
+        console.error("Hiba regisztráció közben: ", err);
+        res.status(500).json({message: "Hiba a regisztráció közben."});
+    }
+});
+
+//LogIn
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+
+    try{
+        //Keresés
+        const [users] = await db.query("SELECT * FROM users WHERE username = ?", [username]);
+        if(users.length === 0){
+            return res.status(400).json({message: "Nincs ilyen felhasználó."});
+        }
+        const user = users[0];
+
+        //Jelszó ellenőrzése
+        const isMatch = await argon.verify(user.password, password);
+        if (!isMatch){
+            return res.status(400).json({message: "."});
+        }
+
+        //JWT token
+        const token = jwt.sign({id: user.id, username: user.username}, process.env.JWT_SECRET, {expiresIn: "1h"});
+        res.json({token});
+    } catch (err){
+        console.error("Hiba a bejelentkezésnél (backend)", err);
+        res.status(500).json({message: "Hiba a bejelentkezésnél."});
+    }
+});
+
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
 app.get("/user", async (req, res) => {
     const { authorization } = req.headers;
 
@@ -121,12 +182,17 @@ app.get("/user", async (req, res) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+<<<<<<< HEAD
         const [users] = await db.query("SELECT id, username, firstname, lastname, email, isAdmin FROM users WHERE id = ?", [decoded.id]);
+=======
+        const [users] = await db.query("SELECT id, username, firstname, lastname, email FROM users WHERE id = ?", [decoded.id]);
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
 
         if (users.length === 0) {
             return res.status(404).json({ message: "Nem található felhasználó." });
         }
 
+<<<<<<< HEAD
         res.json({ 
             id: users[0].id, 
             username: users[0].username, 
@@ -135,12 +201,16 @@ app.get("/user", async (req, res) => {
             email: users[0].email,
             isAdmin: users[0].isAdmin === 1 // Itt is az adatbázisból olvassuk
         });
+=======
+        res.json({ id: users[0].id, username: users[0].username, firstname: users[0].firstname, lastname: users[0].lastname, email: users[0].email });
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
     } catch (err) {
         console.error("Hiba a backendben:", err);
         res.status(401).json({ message: "Sikertelen hitelesítés: Hibás token." });
     }
 });
 
+<<<<<<< HEAD
 app.get("/allUsers", async (req, res) => {
     const { authorization } = req.headers;
 
@@ -365,6 +435,8 @@ app.post("/addCar", async (req, res) => {
     }
 });
 
+=======
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
 app.put("/profile", async (req, res) => {
     const { authorization } = req.headers;
     if (!authorization || !authorization.startsWith("Bearer ")) {
@@ -482,6 +554,20 @@ app.get("/Lamborghini", async (req, res) =>{
         console.error("Hiba a Lamborghini-k lekérésekor: ", err);
         res.status(500).json({message: "Hiba a Lamborghini-k lekérésekor."});
     }
+<<<<<<< HEAD
+=======
+});
+
+app.get("/Lamborghini", async (req, res) =>{
+    try{
+        const [lamborghini] = await db.query("SELECT * FROM cars WHERE brand = 'Lamborghini'");
+        res.json(lamborghini);
+    }
+    catch(err){
+        console.error("Hiba a Lamborghini-k lekérésekor: ", err);
+        res.status(500).json({message: "Hiba a Lamborghini-k lekérésekor."});
+    }
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
 })
 
 app.get("/Pagani", async (req, res) => {
@@ -600,8 +686,11 @@ app.post('/getFavoriteCars', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 // ADMIN
 
+=======
+>>>>>>> c86ca1c51be4ef5c25da9306e4ded06230c0ec78
 const reviews = [
     { id: 1, userName: "Kelemen Dávid", rating: 5, comment: "Remek ügyfélszolgálat és gyönyőrű autók!" },
     { id: 2, userName: "Jagep20", rating: 3, comment: "Szerintem a Mitsubishi Carisma Sokkal kényelmesebb mint egy nagypapa Bentley, de kinek mi." },
