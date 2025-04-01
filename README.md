@@ -1,4 +1,4 @@
-#Fontos tudnivalók
+**Fontos tudnivalók**
 
 Backend mappa
 npm install - telepíti a függőségeket
