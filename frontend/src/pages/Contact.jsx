@@ -70,15 +70,6 @@ export default function Contact(){
                         <p className="mb-0 ms-2">+36702305803</p>
                     </div>
                     <hr />
-                    {/* <LoadScript googleMapsApiKey="AIzaSyCwixAPeMA8yUyrnF2OjjyOEwYkFGTEzCI">
-                    <GoogleMap
-                        mapContainerStyle={mapContainerStyle}
-                        center={center}
-                        zoom={12}
-                    >
-                        <Marker position={center} />
-                    </GoogleMap>
-                    </LoadScript> */}
                     </Col>  
                 </Row>
             </Container>
